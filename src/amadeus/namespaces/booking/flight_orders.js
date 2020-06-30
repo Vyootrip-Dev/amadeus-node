@@ -32,8 +32,8 @@ class FlightOrders {
    * });
    * ```
    */
-  post(params = {}) {
-    return this.client.post('/v1/booking/flight-orders', params);
+  post(params = {}, headers = {}) {
+    return this.client.post('/v1/booking/flight-orders', params, headers);
   }
 }
 

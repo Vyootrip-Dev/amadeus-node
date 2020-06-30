@@ -73,8 +73,8 @@ class Client {
    * @param {Object} [params={}] the POST parameters
    * @return {Promise.<Response,ResponseError>} a Promise
    */
-  post(path, params = {}) {
-    return this.request('POST', path, params);
+  post(path, params = {}, headers = {}) {
+    return this.request('POST', path, params, headers);
   }
 
   /**
@@ -105,9 +105,9 @@ class Client {
    * @return {Promise.<Response,ResponseError>} a Promise
    * @protected
    */
-  request(verb, path, params = {}) {
+  request(verb, path, params = {}, headers = {}) {
     return this.accessToken.bearerToken(this).then((bearerToken) => {
-      return this.unauthenticatedRequest(verb, path, params, bearerToken);
+      return this.unauthenticatedRequest(verb, path, params, bearerToken, headers);
     });
   }
 
@@ -129,8 +129,8 @@ class Client {
    * @return {Promise.<Response,ResponseError>} a Promise
    * @private
    */
-  unauthenticatedRequest(verb, path, params, bearerToken = null) {
-    let request = this.buildRequest(verb, path, params, bearerToken);
+  unauthenticatedRequest(verb, path, params, bearerToken = null, headers = {}) {
+    let request = this.buildRequest(verb, path, params, bearerToken, headers);
     this.log(request);
     let emitter = new EventEmitter();
     let promise = this.buildPromise(emitter);
@@ -166,7 +166,7 @@ class Client {
    * @return {Request}
    * @private
    */
-  buildRequest(verb, path, params, bearerToken) {
+  buildRequest(verb, path, params, bearerToken, headers) {
     return new Request({
       host: this.host,
       verb: verb,
@@ -178,7 +178,8 @@ class Client {
       appId: this.customAppId,
       appVersion: this.customAppVersion,
       port: this.port,
-      ssl: this.ssl
+      ssl: this.ssl,
+      headers: headers
     });
   }
 

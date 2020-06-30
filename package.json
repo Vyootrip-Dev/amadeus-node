@@ -1,6 +1,6 @@
 {
   "name": "@vyootrip-dev/amadeus",
-  "version": "5.0.2",
+  "version": "5.0.4",
   "description": "Node library for the Amadeus travel APIs",
   "main": "lib/amadeus.js",
   "scripts": {

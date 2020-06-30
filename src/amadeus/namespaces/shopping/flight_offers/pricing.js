@@ -38,8 +38,8 @@ class Pricing {
    * });
    * ```
    */
-  post(params = {}) {
-    return this.client.post('/v1/shopping/flight-offers/pricing', params);
+  post(params = {}, headers = {}, query = '') {
+    return this.client.post('/v1/shopping/flight-offers/pricing' + query, params, headers);
   }
 }
 
